@@ -28,7 +28,3 @@ variable "autospotting_tag_filters" {}
 variable "autospotting_tag_filtering_mode" {}
 variable "autospotting_instance_termination_method" {}
 
-variable "lambda_tags" {
-  description = "Tags to be applied to the Lambda function"
-  type        = "map"
-}

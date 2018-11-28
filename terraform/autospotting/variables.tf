@@ -115,7 +115,3 @@ variable "lambda_run_frequency" {
   description = "How frequent should lambda run"
 }
 
-variable "lambda_tags" {
-  description = "Tags to be applied to the Lambda function"
-  type        = "map"
-}

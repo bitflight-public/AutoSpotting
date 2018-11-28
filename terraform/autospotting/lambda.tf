@@ -10,7 +10,7 @@ module "aws_lambda_function" {
   lambda_runtime     = "${var.lambda_runtime}"
   lambda_timeout     = "${var.lambda_timeout}"
   lambda_memory_size = "${var.lambda_memory_size}"
-  lambda_tags        = "${var.lambda_tags}"
+  # lambda_tags        = "${var.lambda_tags}"
 
   autospotting_allowed_instance_types       = "${var.autospotting_allowed_instance_types}"
   autospotting_disallowed_instance_types    = "${var.autospotting_disallowed_instance_types}"
@@ -24,17 +24,19 @@ module "aws_lambda_function" {
   autospotting_regions_enabled              = "${var.autospotting_regions_enabled}"
   autospotting_tag_filters                  = "${var.autospotting_tag_filters}"
   autospotting_tag_filtering_mode           = "${var.autospotting_tag_filtering_mode}"
+
+  context = "${module.label.context}"
 }
 
 resource "aws_iam_role" "autospotting_role" {
-  name                  = "autospotting"
+  name                  = "${module.label.id}-role"
   path                  = "/lambda/"
   assume_role_policy    = "${file("${path.module}/lambda-policy.json")}"
   force_detach_policies = true
 }
 
 resource "aws_iam_role_policy" "autospotting_policy" {
-  name   = "policy_for_autospotting"
+  name   = "${module.label.id}-policy"
   role   = "${aws_iam_role.autospotting_role.id}"
   policy = "${file("${path.module}/autospotting-policy.json")}"
 }
@@ -54,7 +56,7 @@ resource "aws_cloudwatch_event_target" "cloudwatch_target" {
 }
 
 resource "aws_cloudwatch_event_rule" "cloudwatch_frequency" {
-  name                = "autospotting_frequency"
+  name                = "${module.label.id}_autospotting_frequency"
   schedule_expression = "${var.lambda_run_frequency}"
 }
 

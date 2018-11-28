@@ -122,12 +122,3 @@ variable "lambda_run_frequency" {
   description = "How frequent should lambda run"
   default     = "rate(5 minutes)"
 }
-
-variable "lambda_tags" {
-  description = "Tags to be applied to the Lambda function"
-
-  default = {
-    # You can add more values below
-    Name = "autospotting"
-  }
-}
