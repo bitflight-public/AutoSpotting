@@ -10,6 +10,7 @@ module "aws_lambda_function" {
   lambda_runtime     = "${var.lambda_runtime}"
   lambda_timeout     = "${var.lambda_timeout}"
   lambda_memory_size = "${var.lambda_memory_size}"
+
   # lambda_tags        = "${var.lambda_tags}"
 
   autospotting_allowed_instance_types       = "${var.autospotting_allowed_instance_types}"
@@ -24,7 +25,6 @@ module "aws_lambda_function" {
   autospotting_regions_enabled              = "${var.autospotting_regions_enabled}"
   autospotting_tag_filters                  = "${var.autospotting_tag_filters}"
   autospotting_tag_filtering_mode           = "${var.autospotting_tag_filtering_mode}"
-
   context = "${module.label.context}"
 }
 
@@ -56,7 +56,7 @@ resource "aws_cloudwatch_event_target" "cloudwatch_target" {
 }
 
 resource "aws_cloudwatch_event_rule" "cloudwatch_frequency" {
-  name                = "${module.label.id}_autospotting_frequency"
+  name                = "${format("%.30v", module.label.id)}_autospotting_frequency"
   schedule_expression = "${var.lambda_run_frequency}"
 }
 

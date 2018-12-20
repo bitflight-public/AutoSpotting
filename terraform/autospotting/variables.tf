@@ -114,4 +114,3 @@ variable "lambda_timeout" {
 variable "lambda_run_frequency" {
   description = "How frequent should lambda run"
 }
-
